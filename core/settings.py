@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Apps
+    'core',
     'jobs',
     'users',
 ]
