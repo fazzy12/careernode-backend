@@ -81,7 +81,7 @@ class UserProfileView(APIView):
         self.get_object().delete()
         return Response({"message": "Account deleted."}, status=status.HTTP_204_NO_CONTENT)
 
-# --- 3. Admin Endpoints ---
+# --- 3. Admin Endpoints -----
 
 class AdminUserListView(generics.ListAPIView):
     """
