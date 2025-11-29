@@ -9,11 +9,10 @@ services:
       - POSTGRES_DB=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    restart: always  # <--- Auto-restart on crash
+    restart: always
 
   web:
     build: .
-    # Use Gunicorn instead of runserver
     command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
