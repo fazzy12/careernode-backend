@@ -31,5 +31,8 @@ jobs:
           docker compose -f docker-compose.prod.yml down
           docker compose -f docker-compose.prod.yml up -d --build
 
+          # 2. Run Migrations Automatically (Add this!)
+          docker compose -f docker-compose.prod.yml exec -T web python manage.py migrate
+
           # 5. Clean up unused images to save space
           docker image prune -f
