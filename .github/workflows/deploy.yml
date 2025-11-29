@@ -1,0 +1,35 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          # 1. Stop if any command fails
+          set -e
+
+          # 2. Navigate to project folder (Update this path if different!)
+          cd careernode-backend
+
+          # 3. Pull latest code
+          git pull origin main
+
+          # 4. Rebuild and Restart Containers
+          # We use the prod file you created earlier
+          docker compose -f docker-compose.prod.yml down
+          docker compose -f docker-compose.prod.yml up -d --build
+
+          # 5. Clean up unused images to save space
+          docker image prune -f
